@@ -21,6 +21,8 @@ actions:
         ninja %JOBS% -C solusBuildDir
     - meson_install: |
         DESTDIR="%installroot%" ninja install %JOBS% -C solusBuildDir
+    - meson_check: |
+        ninja test %JOBS% -C solusBuildDir
     - qmake: |
         qmake QMAKE_CFLAGS_RELEASE="%CFLAGS%" QMAKE_CXXFLAGS_RELEASE="%CXXFLAGS%" QMAKE_LFLAGS="%LDFLAGS%"
     - qmake4: |
