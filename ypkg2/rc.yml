@@ -17,11 +17,11 @@ actions:
         -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=%PREFIX%
     - meson_configure: |
         LC_ALL=en_US.utf8 CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" LDFLAGS="${LDFLAGS}" meson --prefix %PREFIX% --buildtype=plain --libdir="lib%LIBSUFFIX%" --libexecdir="lib%LIBSUFFIX%/%PKGNAME%" --sysconfdir=/etc --localstatedir=/var solusBuildDir
-    - meson_build: |
+    - ninja_build: |
         LC_ALL=en_US.utf8 ninja %JOBS% -C solusBuildDir
-    - meson_install: |
+    - ninja_install: |
         LC_ALL=en_US.utf8 DESTDIR="%installroot%" ninja install %JOBS% -C solusBuildDir
-    - meson_check: |
+    - ninja_check: |
         LC_ALL=en_US.utf8 ninja test %JOBS% -C solusBuildDir
     - qmake: |
         qmake QMAKE_CFLAGS_RELEASE="${CFLAGS}" QMAKE_CXXFLAGS_RELEASE="${CXXFLAGS}" QMAKE_LFLAGS="${LDFLAGS}"
