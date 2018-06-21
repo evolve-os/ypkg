@@ -55,8 +55,7 @@ PGO_USE_FLAGS = "-fprofile-use -fprofile-dir=\"{}\" -fprofile-correction"
 
 # Clang can handle parameters to the args unlike GCC
 PGO_GEN_FLAGS_CLANG = "-fprofile-instr-generate=\"{}/default-%m.profraw\""
-PGO_USE_FLAGS_CLANG = "-fprofile-instr-use=\"{}/default.profdata\" " \
-                      "-fprofile-correction"
+PGO_USE_FLAGS_CLANG = "-fprofile-instr-use=\"{}/default.profdata\""
 
 # AVX2
 AVX2_ARCH = "haswell"
