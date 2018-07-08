@@ -312,6 +312,7 @@ additional functionality.
      * `no-bind-now`: Configure the package to disable certain flags, where RELRO is unsupported.
      * `no-symbolic`: Disable `-Wl,-Bsymbolic-functions` linker flag
      * `unroll-loops`: Enable `-funroll-loops`. Use this sparingly, only when it provides benefit.
+     * `runpath`: Enable `-Wl,--enable-new-dtags` to make linker use RUNPATH's instead of RPATH's.
      * `thin-lto`: Enable Thin Link Time Optimization
      * `lto`: Enable Link Time Optimization
 

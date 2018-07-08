@@ -49,6 +49,9 @@ THIN_LTO_FLAGS = "-flto=thin -fuse-ld=gold"
 # Allow unrolling loops
 UNROLL_LOOPS_FLAGS = "-funroll-loops"
 
+# Make linker use RUNPATH instead of RPATH
+RUNPATH_FLAGS = "-Wl,--enable-new-dtags"
+
 # GCC PGO flags
 PGO_GEN_FLAGS = "-fprofile-generate -fprofile-dir=\"{}\" "
 PGO_USE_FLAGS = "-fprofile-use -fprofile-dir=\"{}\" -fprofile-correction"
@@ -113,6 +116,8 @@ class Flags:
                 newflags.extend(LTO_FLAGS_GCC.split(" "))
         elif opt_type == "unroll-loops":
             newflags.extend(UNROLL_LOOPS_FLAGS.split(" "))
+        elif opt_type == "runpath":
+            newflags.extend(RUNPATH_FLAGS.split(" "))
         elif opt_type == "no-bind-now":
             newflags = Flags.filter_flags(f, BIND_NOW_FLAGS)
         elif opt_type == "no-symbolic":
@@ -351,13 +356,14 @@ class YpkgContext:
     def init_optimize(self):
         """ Handle optimize settings within the spec """
         for opt in self.spec.pkg_optimize:
-            self.build.cflags = Flags.optimize_flags(self.build.cflags,
-                                                     opt,
-                                                     self.spec.pkg_clang)
-            self.build.cxxflags = Flags.optimize_flags(self.build.cxxflags,
-                                                       opt,
-                                                       self.spec.pkg_clang)
-            if opt == "no-bind-now" or opt == "no-symbolic":
+            if opt != "runpath":
+                self.build.cflags = Flags.optimize_flags(self.build.cflags,
+                                                        opt,
+                                                        self.spec.pkg_clang)
+                self.build.cxxflags = Flags.optimize_flags(self.build.cxxflags,
+                                                        opt,
+                                                        self.spec.pkg_clang)
+            if opt == "no-bind-now" or opt == "no-symbolic" or opt == "runpath":
                 self.build.ldflags = Flags.optimize_flags(self.build.ldflags,
                                                           opt,
                                                           self.spec.pkg_clang)
