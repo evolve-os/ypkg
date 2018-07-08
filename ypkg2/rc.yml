@@ -14,14 +14,16 @@ actions:
     - cmake: |
         cmake -DCMAKE_CFLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
         -DCMAKE_LD_FLAGS="${LDFLAGS}" -DCMAKE_LIB_SUFFIX="%LIBSUFFIX%" \
-        -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=%PREFIX%
+        -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=%PREFIX% \
+        -DCMAKE_INSTALL_LIBDIR=lib%LIBSUFFIX%
     - cmake_ninja: |
         function cmake_ninja() {
             mkdir solusBuildDir && pushd solusBuildDir
             cmake -G Ninja .. \
             -DCMAKE_CFLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
             -DCMAKE_LD_FLAGS="${LDFLAGS}" -DCMAKE_LIB_SUFFIX="%LIBSUFFIX%" \
-            -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=%PREFIX% $* || exit 1
+            -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=%PREFIX% \
+            -DCMAKE_INSTALL_LIBDIR=lib%LIBSUFFIX% $* || exit 1
             popd
         }
         cmake_ninja
