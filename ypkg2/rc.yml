@@ -26,13 +26,13 @@ actions:
         }
         cmake_ninja
     - meson_configure: |
-        LC_ALL=en_US.utf8 CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" LDFLAGS="${LDFLAGS}" meson --prefix %PREFIX% --buildtype=plain --libdir="lib%LIBSUFFIX%" --libexecdir="lib%LIBSUFFIX%/%PKGNAME%" --sysconfdir=/etc --localstatedir=/var solusBuildDir
+        LC_ALL=en_US.UTF-8 CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" LDFLAGS="${LDFLAGS}" meson --prefix %PREFIX% --buildtype=plain --libdir="lib%LIBSUFFIX%" --libexecdir="lib%LIBSUFFIX%/%PKGNAME%" --sysconfdir=/etc --localstatedir=/var solusBuildDir
     - ninja_build: &ninja_build |
-        LC_ALL=en_US.utf8 ninja %JOBS% -C solusBuildDir
+        LC_ALL=en_US.UTF-8 ninja %JOBS% -C solusBuildDir
     - ninja_install: &ninja_install |
-        LC_ALL=en_US.utf8 DESTDIR="%installroot%" ninja install %JOBS% -C solusBuildDir
+        LC_ALL=en_US.UTF-8 DESTDIR="%installroot%" ninja install %JOBS% -C solusBuildDir
     - ninja_check: &ninja_check |
-        LC_ALL=en_US.utf8 ninja test %JOBS% -C solusBuildDir
+        LC_ALL=en_US.UTF-8 ninja test %JOBS% -C solusBuildDir
     # These macros are for backward compatibility only. Please use the ninja ones
     - meson_build: *ninja_build
     - meson_install: *ninja_install
