@@ -164,6 +164,7 @@ class ScriptGenerator:
         self.define_export("PKG_ROOT_DIR", "%rootdir%")
         # Build dir, which is one level up from the source directory.
         self.define_export("PKG_BUILD_DIR", "%builddir%")
+        self.define_export("LT_SYS_LIBRARY_PATH", "%libdir%")
         self.define_export("CC", self.context.build.cc)
         self.define_export("CXX", self.context.build.cxx)
         if self.context.build.ld_as_needed:

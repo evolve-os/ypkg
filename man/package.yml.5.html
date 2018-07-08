@@ -370,6 +370,7 @@ additional functionality.</p>
 <li> <code>no-bind-now</code>: Configure the package to disable certain flags, where RELRO is unsupported.</li>
 <li> <code>no-symbolic</code>: Disable <code>-Wl,-Bsymbolic-functions</code> linker flag</li>
 <li> <code>unroll-loops</code>: Enable <code>-funroll-loops</code>. Use this sparingly, only when it provides benefit.</li>
+<li> <code>runpath</code>: Enable <code>-Wl,--enable-new-dtags</code> to make linker use RUNPATH's instead of RPATH's.</li>
 <li> <code>thin-lto</code>: Enable Thin Link Time Optimization</li>
 <li> <code>lto</code>: Enable Link Time Optimization</li>
 </ul>
@@ -565,7 +566,7 @@ builddeps:
 
   <ol class='man-decor man-foot man foot'>
     <li class='tl'></li>
-    <li class='tc'>March 2018</li>
+    <li class='tc'>July 2018</li>
     <li class='tr'>package.yml(5)</li>
   </ol>
 
