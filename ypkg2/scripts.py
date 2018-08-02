@@ -105,20 +105,13 @@ class ScriptGenerator:
     def init_default_macros(self):
 
         if self.context.emul32:
-            if self.context.avx2:
-                self.define_macro("libdir", "/usr/lib32/haswell")
-            else:
-                self.define_macro("libdir", "/usr/lib32")
+            self.define_macro("libdir", "/usr/lib32")
             self.define_macro("LIBSUFFIX", "32")
-            self.define_macro("PREFIX", "/usr")
         else:
-            # 64-bit AVX2 build in subdirectory
-            if self.context.avx2:
-                self.define_macro("libdir", "/usr/lib64/haswell")
-            else:
-                self.define_macro("libdir", "/usr/lib64")
+            self.define_macro("libdir", "/usr/lib64")
             self.define_macro("LIBSUFFIX", "64")
-            self.define_macro("PREFIX", "/usr")
+
+        self.define_macro("PREFIX", "/usr")
 
         self.define_macro("installroot", self.context.get_install_dir())
         self.define_macro("workdir", self.work_dir)

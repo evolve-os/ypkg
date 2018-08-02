@@ -256,6 +256,10 @@ actions:
         else
             echo "\n\nError: Profiling requested by ypkg but doesn't exist\n\n"
         fi
+    - avx2_lib_shift: |
+        install -dm00755 $PKG_BUILD_DIR/haswell
+        mv %installroot%/%libdir%/* $PKG_BUILD_DIR/haswell
+        mv $PKG_BUILD_DIR/haswell %installroot%/%libdir%/
 defines:
     - CONFOPTS: |
         --prefix=%PREFIX% --build=%HOST% --libdir=%libdir% --mandir=/usr/share/man \

@@ -119,6 +119,7 @@ def execute_step(context, step, step_n, work_dir):
     if context.avx2:
         script.define_export("AVX2BUILD", "1")
     extraScript = None
+    endScript = None
 
     # Allow GCC and such to pick up on our timestamp
     script.define_export("SOURCE_DATA_EPOCH",
@@ -137,6 +138,9 @@ def execute_step(context, step, step_n, work_dir):
         script.define_export("LLVM_PROFILE_FILE", profileFile)
         script.define_export("YPKG_PGO_DIR", context.get_pgo_dir())
 
+    if context.avx2 and step_n == "install":
+        endScript = "%avx2_lib_shift"
+
     exports = script.emit_exports()
 
     # Run via bash with enable and error
@@ -150,6 +154,8 @@ def execute_step(context, step, step_n, work_dir):
     if extraScript:
         full_text += "\n\n{}\n".format(extraScript)
     full_text += "\n\n{}\n".format(step)
+    if endScript:
+        full_text += "\n\n{}\n".format(endScript)
     output = script.escape_string(full_text)
 
     with tempfile.NamedTemporaryFile(prefix="ypkg-%s" % step_n) as script_ex:
