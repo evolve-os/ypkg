@@ -162,6 +162,28 @@ actions:
             popd
         }
         python_install
+    - python_test: |
+        function python_test() {
+            [[ -d py2build ]] && cd py2build
+
+            if [[ -z $PYTHONPATH ]]; then
+                export PYTHONPATH=%installroot%/usr/lib/python%python2_version%/site-packages:$PWD/build/lib
+                local do_unset=true
+            fi
+
+            if [[ -z $1 ]]; then
+                python2 setup.py test || exit 1
+            elif [[ $1 =~ .*\.py$ ]]; then
+                python2 "$@" || exit 1
+            else
+                "$@" || exit
+            fi
+
+            [[ $do_unset ]] && unset PYTHONPATH
+
+            [[ -d ../py2build ]] && cd ..
+        }
+        python_test
     - python_compile: |
         function python_compile() {
             if [ -z "$1" ]; then
@@ -206,6 +228,28 @@ actions:
             popd
         }
         python3_install
+    - python3_test: |
+        function python3_test() {
+            [[ -d py3build ]] && cd py3build
+
+            if [[ -z $PYTHONPATH ]]; then
+                export PYTHONPATH=%installroot%/usr/lib/python%python3_version%/site-packages:$PWD/build/lib
+                local do_unset=true
+            fi
+
+            if [[ -z $1 ]]; then
+                python3 setup.py test || exit 1
+            elif [[ $1 =~ .*\.py$ ]]; then
+                python3 "$@" || exit 1
+            else
+                "$@" || exit
+            fi
+
+            [[ $do_unset ]] && unset PYTHONPATH
+
+            [[ -d ../py3build ]] && cd ..
+        }
+        python3_test
     - python3_compile: |
         function python3_compile() {
             if [ -z "$1" ]; then
@@ -270,3 +314,8 @@ defines:
     # Get "Current" kernel version
     - kernel_version_current: |
         $(echo "$(basename `readlink /usr/lib/kernel/default-current` | cut -d '.' -f 4,5,6)".current)
+    # Get python 2 & 3 version
+    - python2_version: |
+        $(python --version 2>&1 | sed -r 's|^Python (.*)\..*$|\1|')
+    - python3_version: |
+        $(python3 --version 2>&1 | sed -r 's|^Python (.*)\..*$|\1|')
